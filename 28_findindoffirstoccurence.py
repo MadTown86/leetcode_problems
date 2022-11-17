@@ -2,8 +2,8 @@
 https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/
 """
 from functools import lru_cache
-from timeit import timeit
-timeit()
+import timer
+@lru_cache
 def strStr(haystack: str, needle: str, pos: int = 0) -> int:
     if len(haystack) < len(needle):
         return -1
@@ -13,7 +13,43 @@ def strStr(haystack: str, needle: str, pos: int = 0) -> int:
         pos += 1
         return strStr(haystack=haystack[1:], needle=needle, pos=pos)
 
-if __name__ == "__main__":
-    test1 = "iamnotabugglycornstuglybuggly"
+def strStr2(haystack: str, needle: str, pos: int = 0) -> int:
+    if len(haystack) < len(needle):
+        return -1
+    if haystack[0:len(needle)] == needle:
+        return pos
+    else:
+        pos += 1
+        return strStr(haystack=haystack[1:], needle=needle, pos=pos)
 
-    print(strStr(test1, "buggly", 0))
+def strStr3(haystack: str, needle: str, pos: int = 0) -> int:
+    i = 0
+    while True:
+        if haystack[i:len(needle)] == needle:
+            return True
+        else:
+            continue
+
+    return False
+
+
+# I want to see if there is any real memory improvement or speed improvement when using memoryview, bytes, hash to compare
+# vs. normal strings
+def strStr4(haystack: str, needle: str) -> int:
+    i = 0
+    while i < len(needle):
+
+        if hash(m[i:nl].tobytes()) == hash(n):
+            return True
+        else:
+            i += 1
+            continue
+
+    return False
+
+
+
+if __name__ == "__main__":
+    test1 = "iamnotada;sldkfja;sldkfja;sldkfja;sldkfja;sldkfja;woeijra;wlifna;slkdfj;alskdfja;lskdfj;woeifja;efioja;soiefja;soiefja;soefija;sliefja;lsiefj;asliefja;soiefj;asilefja;sliefja;sliefja;sliefja;sliefja;sliefja;sliefj;asliefj;asleifja;sleifja;soeijf;wlkjenf;lwjnerflkewajrntg;alkerjta;lskdjf;aslkdfj;aoweijf;aoeing;aoinse;foiasjef;lakesnmf;lawknwjef;aosid" + "jf;asoing;aowienf;asdkljfbugglycornstuglybuggly"
+    test2 = "ibuggly"
+    print(strStr4(test2, "buggly"))
