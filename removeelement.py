@@ -51,6 +51,9 @@ class Solution:
                     nums[i] = '_'
                     nums[i], nums[j] = nums[j], nums[i]
                     c += 1
+                    if nums[i] == val:
+                        nums[i] = '_'
+                        c += 1
                     return len(nums) - c
                 else:
                     if nums[j] == val:
@@ -65,6 +68,8 @@ class Solution:
                         nums[j] = '_'
                         c += 1
                         j -= 1
+                if nums[j] == '_':
+                    j -= 1
                 elif nums[j] != val:
                     nums[i] = '_'
                     c += 1
@@ -74,11 +79,18 @@ class Solution:
                 i += 1
 
 
+"""
+Muumi's Answer:
 
-
-
-
-
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        i = 0
+        for num in nums:
+            if num != val:
+                nums[i] = num
+                i += 1
+        return i
+"""
 if __name__ == "__main__":
 
 
@@ -92,9 +104,9 @@ if __name__ == "__main__":
     test8 = [2, 2, 3]
     test9 = [1, 2, 3, 4]
     test10 = [0, 1, 2, 2, 3, 0, 4, 2]
+    test11 = [2, 3, 3]
     testbin = [test, test2, test3, test4, test5, test6, test7]
 
     s = Solution()
 
-
-    print(s.removeElement(test2, 2))
+    print(s.removeElement(test11, 3))
