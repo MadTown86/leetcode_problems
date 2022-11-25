@@ -98,6 +98,8 @@ Check to see if the new complement is already stored in dictionary
 return if so
 add element in dictionary by key = index
 
+
+
 So things to remember, if you know you are most likely going to be FORCED to loop through an entire array, find a way
 to contain it to one simple loop through the elements.  I was trying to save on data usage to a certain extent, but
 in the end I was carrying multiple variables through the whole process and maintaining references to all of the elements
@@ -108,7 +110,7 @@ Anyway, this was another one where the solution was easy if you could think of i
 would have worked but timed out.  It was the brute force option where you have inner/outter loop to check all possible
 compilations.
 
-I need to do more actual testing and also read the rest of the algorithm book, because I need to start understanding
+I need to do more actual testing of my algorithms with the timer.py funcitonality and also read the rest of the algorithm book, because I need to start understanding
 how much memory is actually utilized for each type of data and container.  I didn't get to that part of the book
 on hashmap yet and it is perhaps not as costly to access the hashmap for every item on the loop.
 
