@@ -33,6 +33,17 @@ analyze the following snip of code:
 newest = ListNode(val, None)
 tail.next = newest
 tail = newest
+
+For the longest time, I kept feeling like the tail = newest would somehow overwrite the pre-existing tail node but I 
+need to remember that even normally, data elements that are created in this way are still in memory until garbage
+collection even if the names assigned to them are suddenly used for other things.  I also need to remember that the
+elements still have a reference assignment because each nodde references the next and so they won't be garbage collected.
+
+A point on this would be, if I didn't have a 'front' node, there wouldn't be a way to access any of the other nodes and
+they would all be garbage collected.
+
+Essentially, you create a new node, point the pre-existing tail node instance variable .next to the new node in memory
+and for quick reference only, you reassign the variable name 'tail' to the newest node you want at the end.
 """
 class ListNode:
     def __init__(self, val=0, next=None):
