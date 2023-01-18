@@ -28,10 +28,26 @@ class Solution:
             else:
                 return True
 
+
+    # Fastest:
+    def isPalindrome2(self, x: int) -> bool:
+        x = str(x)
+        if x == x[::-1]:
+            return True
+        return False
+
+    # Most Common
+    def isPalindrome3(self, x: int) -> bool:
+        y = str(x)
+        if y == y[::-1]:
+            return True
+        else:
+            return False
+
 if __name__ == "__main__":
     S = Solution()
     start = perf_counter()
-    res = S.isPalindrome(12321232123212321232123212321232123212321232123212321232123212321232123212321232123212321)
+    res = S.isPalindrome2(12321232123212321232123212321232123212321232123212321232123212321232123212321232123212321)
     stop = perf_counter()
     timer = stop - start
     print(res)
