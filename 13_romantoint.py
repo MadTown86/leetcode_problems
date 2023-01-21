@@ -1,4 +1,17 @@
 class Solution:
+    """
+    My core mistakes:
+    1. strings are indexable, never needed to createa  list.  I did realize this when I was already done with the
+    problem, but again.  I need to remember this when I start.
+    2. Too many bool statements that I believe HAVE to be checked
+    3. To many variables that need to be assigned at each iteration of the while loop.
+
+    Ways to improve:
+    For string parsing, use indexes because direct indexing a string / list is the fastest way rather than storing
+    the last variable in memory to do the comparison.
+
+    Anyway.  Enough for now.
+    """
     def romanToInt(self, s: str) -> int:
         sw_bd = {
             "M": 1000,
@@ -82,6 +95,26 @@ class Solution:
 
             return res
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    def romanToInt(self, s: str) -> int:
+        # Trying to mimic after knowing it is possible to create with just two conditional statements
+            pass
 
 
 if __name__ == "__main__":
