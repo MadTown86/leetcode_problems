@@ -8,7 +8,6 @@ class Solution:
             "X": 10,
             "V": 5,
             "I": 1
-
         }
 
         res = 0
@@ -17,27 +16,73 @@ class Solution:
             return res
 
         step = list(s)
-        last = sw_bd[step.pop()]
-        res += last
-        last_largest = last
+        l = sw_bd[step.pop()]
+        res += l
+        l_l = l
         while step:
             char = step.pop()
             cur = sw_bd[char]
-            if cur > last_largest:
-                last_largest = cur
-            if cur < last and cur < last_largest:
+            if cur > l_l:
+                l_l = cur
+            if cur < l and cur < l_l:
                 res -= cur
-            elif cur > last:
+            elif cur > l:
                 res += cur
-            elif cur == last and cur < last_largest:
+            elif cur == l and cur < l_l:
                 res -= cur
-            elif cur == last and cur > last_largest:
+            elif cur == l and cur > l_l:
                 res += cur
-            elif cur == last and cur == last_largest:
+            elif cur == l and cur == l_l:
                 res += cur
-            last = cur
+            l = cur
 
         return res
+
+    # If I had an inkling of series math, I need to look through this one at some point to get the 2* logic
+    # Example of faster problem
+    def romanToInt2(self, s: str) -> int:
+        d = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+        res = 0
+        res += d[s[0]]
+        for i in range(1, len(s)):
+            if d[s[i]] > d[s[i - 1]]:
+                res += d[s[i]] - 2 * d[s[i - 1]]
+            else:
+                res += d[s[i]]
+        return res
+
+    # Slices are faster potentially, I also knew there was a way to slim down my conditional statements.
+    # This is my real problem so I need to really understand HOW this problem didn't need all of the garbage I thought
+    # That it did.
+    def romanToInt3(self, s: str) -> int:
+        def romanToInt(self, s: str) -> int:
+            values = {
+                "I": 1,
+                "V": 5,
+                "X": 10,
+                "L": 50,
+                "C": 100,
+                "D": 500,
+                "M": 1000
+            }
+
+            res = 0
+
+            sLen = len(s)
+
+            i = sLen - 1
+
+            while i >= 0:
+                if i > 0 and values[s[i]] > values[s[i - 1]]:
+                    res += values[s[i]] - values[s[i - 1]]
+                    i -= 2
+                else:
+                    res += values[s[i]]
+                    i -= 1
+
+            return res
+
+
 
 if __name__ == "__main__":
     import timeit
