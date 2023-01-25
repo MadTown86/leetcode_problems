@@ -22,6 +22,25 @@ class Solution:
                 break
         return abs(x-y)
 
+    def lengthOfLastWord2(self, s: str) -> int:
+        s = [x.strip() for x in s.split()]
+        for x in range(-1, -(len(s)+1), -1):
+            for c in s[x]:
+                if c == s[x][0] and c.isalpha():
+                    return len(s[x])
+                if c.isnumeric():
+                    break
+                else:
+                    continue
+
+        return 0
+
+
+
+
+
+
+
 if __name__ == "__main__":
     S = Solution()
     args = ["a ", "a" , "Hello", " fly me  to  the  moon  ", "a b c d elf 55"]
@@ -33,4 +52,4 @@ if __name__ == "__main__":
         print(f'TIME: {stop-start:.10f}')
 
     for arg in args:
-        perfit(S.lengthOfLastWord, arg)
+        perfit(S.lengthOfLastWord2, arg)
