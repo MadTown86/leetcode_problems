@@ -1,5 +1,6 @@
 class Solution:
     def addBinary(self, a: str, b: str) -> str:
+        pass
         av, bv = 0, 0
         a = ''.join(x for x in reversed(a))
         b = ''.join(x for x in reversed(b))
