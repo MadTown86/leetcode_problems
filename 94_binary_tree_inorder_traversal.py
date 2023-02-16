@@ -6,8 +6,10 @@ class TreeNode:
         self.right = right
 class Solution:
     def inorderTraversal(self, root: TreeNode) -> List[int]:
+        r = []
+        if root.left:
+            r.append()
 
-        while root.left != None:
 
 
 if __name__ == '__main__':
@@ -19,3 +21,5 @@ if __name__ == '__main__':
     T2 = TreeNode(val = 2, left=T3, right=T4)
     T1 = TreeNode(val = 1, left=T2, right=T5)
 
+    S = Solution()
+    S.inorderTraversal(T1)
