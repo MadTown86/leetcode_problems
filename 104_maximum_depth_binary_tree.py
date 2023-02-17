@@ -1,4 +1,4 @@
-from collections import deque
+from typing import List
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -11,27 +11,19 @@ class Solution:
         self._maxDepth(root)
         return self.maxs
     def _maxDepth(self, root: TreeNode) -> None:
-        if not root.left and not root.right:
-            if self.c > self.maxs:
-                self.maxs = self.c
-                self.c = 0
-        if root.left:
-            self.c += 1
-            self._maxDepth(root.left)
-        if root.right:
-            self.c += 1
-            self._maxDepth(root.right)
+
+
 
 if __name__ == "__main__":
-
-    T8 = TreeNode()
-    T7 = TreeNode(right=T8)
-    T6 = TreeNode()
-    T5 = TreeNode(left=T6, right=T7)
-    T4 = TreeNode()
-    T3 = TreeNode()
-    T2 = TreeNode(left=T3, right=T4)
-    T1 = TreeNode(left=T2, right=T5)
+    T9 = TreeNode(val=9)
+    T8 = TreeNode(val=8, right=T9)
+    T7 = TreeNode(val=7, right=T8)
+    T6 = TreeNode(val=6)
+    T5 = TreeNode(val=5, left=T6, right=T7)
+    T4 = TreeNode(val=4)
+    T3 = TreeNode(val=3)
+    T2 = TreeNode(val=2, left=T3, right=T4)
+    T1 = TreeNode(val= 1, left=T2, right=T5)
 
     S = Solution()
     print(S.maxDepth(T1))
