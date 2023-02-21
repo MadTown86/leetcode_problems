@@ -43,6 +43,22 @@ class Solution:
             else:
                 return head
 
+# I didn't think to create a 'dummy' sentinel node.  Dang, much easier answer I am goign to use the next time.
+class Solution2:
+    def removeElements2(self, head: ListNode, val: int) -> ListNode:
+        dummy = ListNode()
+        dummy.next = head
+        prev, node = dummy, head
+
+        while node:
+            if node.val == val:
+                prev.next = node.next
+            else:
+                prev = node
+            node = node.next
+
+        return dummy.next
+
 
 
 
