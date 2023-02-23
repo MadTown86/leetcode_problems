@@ -1,9 +1,46 @@
 class Solution:
     def containsDuplicate(self, nums: list[int]) -> bool:
-        i = 0
-        j = 1
-        while j < len(nums):
-            nu
+        if len(nums) < 22:
+            l = []
+            for x in nums:
+                if x in l:
+                    return True
+                else:
+                    l.append(x)
+            return False
+        else:
+
+            l = sorted(nums)
+            print(l)
+            a, b, c, d, e, f = len(l) - 1, len(l) - 2, len(l) - 3, len(l) - 4, len(l) - 5, len(l) - 6
+            t, u, v, x, y, z = 0, 1, 2, 3, 4, 5
+            print(len(l))
+            lastf = 0
+            lastz = 0
+            flag = True
+            while t <= (len(l) // 2) + 6:
+                if l[a] == l[b] or l[b] == l[c] or l[c] == l[d] or l[d] == l[e] or l[e] == l[f]:
+                    lastf = l[f]
+                    return True
+                else:
+                    a -= 5
+                    b -= 5
+                    c -= 5
+                    d -= 5
+                    e -= 5
+                    f -= 5
+
+                if l[t] ==l[u] or l[u] == l[v] or l[v] == l[x] or l[x] == l[y] or l[y] == l[z]:
+                    return True
+                else:
+                    t += 6
+                    u += 6
+                    v += 6
+                    x += 6
+                    y += 6
+                    z += 6
+
+        return False
 
 
 if __name__ == "__main__":
