@@ -101,3 +101,19 @@ def deleteDuplicates(self, head):
             cur.next = cur.next.next     # skip duplicated node
         cur = cur.next     # not duplicate of current node, move to next node
     return head
+
+#https://leetcode.com/problems/remove-linked-list-elements
+class Solution2:
+    def removeElements2(self, head: ListNode, val: int) -> ListNode:
+        dummy = ListNode()
+        dummy.next = head
+        prev, node = dummy, head
+
+        while node:
+            if node.val == val:
+                prev.next = node.next
+            else:
+                prev = node
+            node = node.next
+
+        return dummy.next
