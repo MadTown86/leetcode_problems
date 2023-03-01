@@ -101,3 +101,132 @@ def deleteDuplicates(self, head):
             cur.next = cur.next.next     # skip duplicated node
         cur = cur.next     # not duplicate of current node, move to next node
     return head
+
+# https://leetcode.com/problems/sort-an-array/solutions/461394/python-3-eight-sorting-algorithms-with-explanation/?orderBy=most_votes&languageTags=python3
+
+"""
+Selection sort - O(n^2)
+"""
+
+
+class Solution:
+    def sortArray(self, N: List[int]) -> List[int]:
+        L = len(N)
+        return [N.pop(min(range(L - i), key=lambda x: N[x])) for i in range(L)]
+
+"""
+Bubble Sort - O(n^2)
+"""
+class Solution:
+    def sortArray(self, N: List[int]) -> List[int]:
+        L, B = len(N), 1
+        while B:
+            B = 0
+            for i in range(L-1):
+                if N[i] > N[i+1]: N[i], N[i+1], B = N[i+1], N[i], 1
+        return N
+
+"""
+Insertion Sort: - O(n^2)
+"""
+
+class Solution:
+    def sortArray(self, N: List[int]) -> List[int]:
+        L = len(N)
+        for i in range(1,L):
+            for j in range(0,i):
+                if N[i] < N[j]:
+                    N.insert(j, N.pop(i))
+                    break
+        return N
+
+"""
+Binary Insertion Sort - O(n^2) - still necessary to go through entire list
+"""
+
+
+class Solution:
+    def sortArray(self, N: List[int]) -> List[int]:
+        L = len(N)
+        for i in range(1, L): bisect.insort_left(N, N.pop(i), 0, i)
+        return N
+
+"""
+Counting Sort : O(n + k)
+"""
+
+class Solution:
+    def sortArray(self, N: List[int]) -> List[int]:
+        C, m, M, S = collections.Counter(N), min(N), max(N), []
+        for n in range(m,M+1): S.extend([n]*C[n])
+        return S
+
+"""
+Quicksort - worst case - O(n^2)
+"""
+
+
+class Solution:
+    def sortArray(self, N: List[int]) -> List[int]:
+        def quicksort(A, I, J):
+            if J - I <= 1: return
+            p = partition(A, I, J)
+            quicksort(A, I, p), quicksort(A, p + 1, J)
+
+        def partition(A, I, J):
+            A[J - 1], A[(I + J - 1) // 2], i = A[(I + J - 1) // 2], A[J - 1], I
+            for j in range(I, J):
+                if A[j] < A[J - 1]: A[i], A[j], i = A[j], A[i], i + 1
+            A[J - 1], A[i] = A[i], A[J - 1]
+            return i
+
+        quicksort(N, 0, len(N))
+        return N
+
+"""
+Mergesort
+"""
+class Solution:
+    def sortArray(self, N: List[int]) -> List[int]:
+        def mergesort(A):
+            LA = len(A)
+            if LA == 1: return A
+            LH, RH = mergesort(A[:LA // 2]), mergesort(A[LA // 2:])
+            return merge(LH, RH)
+
+        def merge(LH, RH):
+            LLH, LRH = len(LH), len(RH)
+            S, i, j = [], 0, 0
+            while i < LLH and j < LRH:
+                if LH[i] <= RH[j]:
+                    i, _ = i + 1, S.append(LH[i])
+                else:
+                    j, _ = j + 1, S.append(RH[j])
+            return S + (RH[j:] if i == LLH else LH[i:])
+
+        return mergesort(N)
+
+"""
+Bucket Sort - O(n^2)
+"""
+
+
+class Solution:
+    def sortArray(self, N: List[int]) -> List[int]:
+        def insertion_sort(A):
+            for i in range(1, len(A)):
+                for j in range(0, i):
+                    if A[i] < A[j]:
+                        A.insert(j, A.pop(i))
+                        break
+            return A
+
+        def bucketsort(A):
+            buckets, m, S = [[] for _ in range(1000)], min(A), []
+            R = max(A) - m
+            if R == 0: return A
+            for a in A: buckets[999 * (a - m) // R]
+            for b in buckets: S.extend(insertion_sort(b))
+            return S
+
+        return bucketsort(N)

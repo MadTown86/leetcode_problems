@@ -1,20 +1,10 @@
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
-class Solution:
-    flag = True
+from typing import List
 
-    def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
-        if not p and not q:
-            return True
-        elif not p or not q:
-            return False
-        else:
-            return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+# https://leetcode.com/problems/sort-an-array/
+# https://towardsdatascience.com/understanding-time-complexity-with-python-examples-2bda6e8158a7
+# I was able to get help looking at a version of mergesort pattern.
 
-# Mergesort with recursion
+# speed/time req's - O(nlog(n))
 
 class Solution:
     def sortArray(self, nums: List[int]) -> List[int]:
@@ -51,3 +41,18 @@ class Solution:
 
         recurseit(nums)
         return nums
+
+
+
+
+
+
+if __name__ == "__main__":
+    l = [5, 2, 3, 6, 7, 8, 9, 2, 5, 9, 10, 25, 18, 32, 44, 54, 99, 32, 1, 0]
+    S = Solution()
+    S.sortArray(l)
+    print(l)
+
+
+
+
