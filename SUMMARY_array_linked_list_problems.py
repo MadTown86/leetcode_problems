@@ -102,7 +102,24 @@ def deleteDuplicates(self, head):
         cur = cur.next     # not duplicate of current node, move to next node
     return head
 
-# https://leetcode.com/problems/sort-an-array/solutions/461394/python-3-eight-sorting-algorithms-with-explanation/?orderBy=most_votes&languageTags=python3
+#https://leetcode.com/problems/remove-linked-list-elements
+class Solution2:
+    def removeElements2(self, head: ListNode, val: int) -> ListNode:
+        dummy = ListNode()
+        dummy.next = head
+        prev, node = dummy, head
+
+        while node:
+            if node.val == val:
+                prev.next = node.next
+            else:
+                prev = node
+            node = node.next
+
+        return dummy.next
+
+    # https://leetcode.com/problems/sort-an-array/solutions/461394/python-3-eight-sorting-algorithms-with-explanation/?orderBy=most_votes&languageTags=python3
+
 
 """
 Selection sort - O(n^2)
@@ -114,31 +131,37 @@ class Solution:
         L = len(N)
         return [N.pop(min(range(L - i), key=lambda x: N[x])) for i in range(L)]
 
+
 """
 Bubble Sort - O(n^2)
 """
+
+
 class Solution:
     def sortArray(self, N: List[int]) -> List[int]:
         L, B = len(N), 1
         while B:
             B = 0
-            for i in range(L-1):
-                if N[i] > N[i+1]: N[i], N[i+1], B = N[i+1], N[i], 1
+            for i in range(L - 1):
+                if N[i] > N[i + 1]: N[i], N[i + 1], B = N[i + 1], N[i], 1
         return N
+
 
 """
 Insertion Sort: - O(n^2)
 """
 
+
 class Solution:
     def sortArray(self, N: List[int]) -> List[int]:
         L = len(N)
-        for i in range(1,L):
-            for j in range(0,i):
+        for i in range(1, L):
+            for j in range(0, i):
                 if N[i] < N[j]:
                     N.insert(j, N.pop(i))
                     break
         return N
+
 
 """
 Binary Insertion Sort - O(n^2) - still necessary to go through entire list
@@ -151,15 +174,18 @@ class Solution:
         for i in range(1, L): bisect.insort_left(N, N.pop(i), 0, i)
         return N
 
+
 """
 Counting Sort : O(n + k)
 """
 
+
 class Solution:
     def sortArray(self, N: List[int]) -> List[int]:
         C, m, M, S = collections.Counter(N), min(N), max(N), []
-        for n in range(m,M+1): S.extend([n]*C[n])
+        for n in range(m, M + 1): S.extend([n] * C[n])
         return S
+
 
 """
 Quicksort - worst case - O(n^2)
@@ -183,9 +209,12 @@ class Solution:
         quicksort(N, 0, len(N))
         return N
 
+
 """
 Mergesort
 """
+
+
 class Solution:
     def sortArray(self, N: List[int]) -> List[int]:
         def mergesort(A):
@@ -205,6 +234,7 @@ class Solution:
             return S + (RH[j:] if i == LLH else LH[i:])
 
         return mergesort(N)
+
 
 """
 Bucket Sort - O(n^2)
