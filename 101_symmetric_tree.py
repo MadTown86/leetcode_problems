@@ -7,86 +7,145 @@ class TreeNode:
         self.left = left
         self.right = right
 class Solution:
+    def __init__(self):
+        self.left = 0
+        self.right = 0
+        self.r_right = 0
+        self.r_left = 0
     def isSymmetric(self, root: TreeNode) -> bool:
-        ll, lr, rl, rr, l_stack, r_stack = 0, 0, 0, 0, deque(), deque()
+        l_stack, r_stack = deque(), deque()
         r_visited, l_visited = [], []
 
-        def leftpass(node, stack, score):
-            print(node.val)
-            if node.left is not None and node.left not in l_visited:
-                stack.appendleft(node.left)
-                score += 1
-            else:
-                score += 1
+        if root and not root.left and not root.right:
+            return True
+        if not root or not root.left or not root.right:
+            return False
+        root_right = root
 
-        def rightpass(node, stack, score):
-            print(node.val)
-            if node.right is not None and node.right not in r_visited:
-                stack.appendleft(node.right)
-                score += 1
-            else:
-                score += 1
+        # Prime left side deque, add nodes to left_visited
+        while root.left:
+            l_stack.append(root.left)
+            l_visited.append(root.left)
+            self.left += 1
+            root = root.left
+        # Prime right side deque, add nodes to right_visited
+        while root_right.right:
+            r_stack.append(root_right.right)
+            r_visited.append(root_right.right)
+            self.r_right += 1
+            root_right = root_right.right
 
+        # Pop through left side deque until empty, adding new nodes when not already in visited bins
+        while l_stack and r_stack:
+            curr_node = l_stack.popleft()
+            curr_right_node = r_stack.popleft()
 
-        if not root.left and not root.right:
-            if not root:
+            if curr_node.val != curr_right_node.val:
                 return False
-            else:
-                return True
-        else:
-            s_left = root.left
-            l_stack.appendleft(s_left)
-            while s_left.left:
-                l_stack.appendleft(s_left.left)
-                l_visited.append(s_left.left)
-                ll += 1
-                s_left = s_left.left
 
-            while l_stack:
-                pop_right = l_stack.pop()
-                if pop_right.left:
-                    leftpass(pop_right.left, l_stack, ll)
-                    l_visited.append(pop_right)
-                if pop_right.right:
-                    rightpass(pop_right.right, l_stack, lr)
-                    r_visited.append(pop_right)
+            if curr_node.left and curr_node.left not in l_visited:
+                l_stack.appendleft(curr_node.left)
+                l_visited.append(curr_node.left)
+                self.left += 1
+            if curr_node.right and curr_node.right not in r_visited:
+                l_stack.appendleft(curr_node.right)
+                r_visited.append(curr_node.right)
+                self.right += 1
 
-            s_right = root.right
-            r_stack.append(s_right)
-            while s_right.right:
-                r_stack.append(s_right.right)
-                r_visited.append(s_right.right)
-                rr += 1
-                s_right = s_right.right
+            if curr_right_node.right and curr_right_node.right not in r_visited:
+                r_stack.appendleft(curr_right_node.right)
+                r_visited.append(curr_right_node.right)
+                self.r_right += 1
+            if curr_right_node.left and curr_right_node.left not in l_visited:
+                r_stack.appendleft(curr_right_node.left)
+                l_visited.append(curr_right_node.left)
+                self.r_left += 1
 
-            while r_stack:
-                pop_onright = r_stack.pop()
-                if pop_onright.right:
-                    rightpass(pop_onright.right, r_stack, rr)
-                    r_visited.append(pop_onright)
-                if pop_onright.left:
-                    l_visited.append(pop_onright)
-                    leftpass(pop_onright.left, r_stack, rl)
+            if self.left != self.r_right or self.right != self.r_left:
+                return False
 
+        return True if self.left == self.r_right and self.right == self.r_left and not l_stack and not r_stack else False
 
-        print(f'll: {ll}, lr = {lr}, rr = {rr}, rl = {rl}')
+# Recursive Answer from Submissions:
+# https://leetcode.com/problems/symmetric-tree/solutions/33068/6line-ac-python/?orderBy=most_votes&languageTags=python
+
+"""
+    def isSymmetric(self, root):
+        def isSym(L,R):
+            if not L and not R: return True
+            if L and R and L.val == R.val: 
+                return isSym(L.left, R.right) and isSym(L.right, R.left)
+            return False
+        return isSym(root, root)
+"""
+
+"""
+def isSymmetric(self, root):
+    if not root:
+        return True
+    return self.dfs(root.left, root.right)
+    
+def dfs(self, l, r):
+    if l and r:
+        return l.val == r.val and self.dfs(l.left, r.right) and self.dfs(l.right, r.left)
+    return l == r
+	
+def isSymmetric(self, root):
+    if not root:
+        return True
+    stack = [(root.left, root.right)]
+    while stack:
+        l, r = stack.pop()
+        if not l and not r:
+            continue
+        if not l or not r or (l.val != r.val):
+            return False
+        stack.append((l.left, r.right))
+        stack.append((l.right, r.left))
+    return True
+"""
+
 
 
 if __name__ == '__main__':
-    N7 = TreeNode(6)
-    N6 = TreeNode(5)
-    N5 = TreeNode(4)
-    N4 = TreeNode(3)
-    N3 = TreeNode(2)
-    N2 = TreeNode(1)
-    N1 = TreeNode(0)
+
+    # False Case - [2,-4,-4,null,-79,null,-79,-37,null,-37]
+    N10 = TreeNode(-37)
+    N9 = None
+    N8 = TreeNode(-37)
+    N7 = TreeNode(-79)
+    N6 = None
+    N5 = TreeNode(-79)
+    N4 = None
+    N3 = TreeNode(-4)
+    N2 = TreeNode(-4)
+    N1 = TreeNode(2)
     N1.left = N2
     N1.right = N3
     N2.left = N4
     N2.right = N5
     N3.left = N6
     N3.right = N7
+    N5.left = N8
+    N5.right = N9
+    N7.left = N10
+    N7.right = None
+
+    L7 = TreeNode(6)
+    L4 = TreeNode(6)
+    L6 = TreeNode(5)
+    L5 = TreeNode(5)
+    L3 = TreeNode(4)
+    L2 = TreeNode(4)
+    L1 = TreeNode(2)
+
+    L1.left = L2
+    L1.right = L3
+    L2.left = L4
+    L2.right = L5
+    L3.left = L6
+    L3.right = L7
 
     S = Solution()
-    print(S.isSymmetric(N1))
+    print(S.isSymmetric(L1))
 
