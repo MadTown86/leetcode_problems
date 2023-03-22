@@ -61,6 +61,40 @@ class Solution:
 
 # https://en.wikipedia.org/wiki/Tree_traversal#Breadth-first_search_/_level_order
 
+
+"""
+This following one is for checking if a binary tree is height balanced:
+class Solution:
+    def height(self, root):
+
+        # base condition when binary tree is empty
+        if root is None:
+            return 0
+        return max(self.height(root.left), self.height(root.right)) + 1
+
+    # function to check if tree is height-balanced or not
+
+
+    def isBalanced(self, root):
+
+        # Base condition
+        if root is None:
+            return True
+
+        # for left and right subtree height
+        lh = self.height(root.left)
+        rh = self.height(root.right)
+
+        # allowed values for (lh - rh) are 1, -1, 0
+        if (abs(lh - rh) <= 1) and self.isBalanced(
+                root.left) is True and self.isBalanced(root.right) is True:
+            return True
+
+        # if we reach here means tree is not
+        # height-balanced tree
+        return False
+"""
+
 """
 Design Pattern:
 Depth-First-Search
