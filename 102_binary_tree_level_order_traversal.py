@@ -22,46 +22,70 @@ class Solution:
 
 
 
-"""
-#Other iterative approach I should have gone after.  Eventually, I 'knew' that you would need to have multiple layers of recursion in order to track depth
-but couldn't get it.
+    """
+    #Other iterative approach I should have gone after.  Eventually, I 'knew' that you would need to have multiple layers of recursion in order to track depth
+    but couldn't get it.
+    
+    def levelOrder(self, root):
+        ans, level = [], [root]
+        while root and level:
+            ans.append([node.val for node in level])
+            LRpair = [(node.left, node.right) for node in level]
+            level = [leaf for LR in LRpair for leaf in LR if leaf]
+        return ans
+    
+    
+    # https://leetcode.com/problems/binary-tree-level-order-traversal/solutions/33464/5-6-lines-fast-python-solution-48-ms/?orderBy=most_votes&languageTags=python
+    
+    I  had to look it up, the recursive way to do it I knew was something like this but couldn't nail it down after a while.
+    
+    I need to remember this.
+    
+    def levelOrder(self, root):
+            if not root:
+                return []
+            
+            answer = []
+            self.traverse(root, 1, answer)
+            return answer
+        
+        def traverse(self, node, level, answer):
+            if not node:
+                return 
+            
+            if level > len(answer):
+                # we are at a new level
+                answer.append([node.val])
+            else:
+                answer[level-1].extend([node.val])
+            
+            self.traverse(node.left, level + 1, answer)
+            self.traverse(node.right, level + 1, answer)    
+    """
 
-def levelOrder(self, root):
-    ans, level = [], [root]
-    while root and level:
-        ans.append([node.val for node in level])
-        LRpair = [(node.left, node.right) for node in level]
-        level = [leaf for LR in LRpair for leaf in LR if leaf]
-    return ans
+    # Attempting to re-write both from memory
 
-
-# https://leetcode.com/problems/binary-tree-level-order-traversal/solutions/33464/5-6-lines-fast-python-solution-48-ms/?orderBy=most_votes&languageTags=python
-
-I  had to look it up, the recursive way to do it I knew was something like this but couldn't nail it down after a while.
-
-I need to remember this.
-
-def levelOrder(self, root):
+    def levelOrder2(self, root: TreeNode) -> List[List[int]]:
         if not root:
             return []
-        
+
         answer = []
         self.traverse(root, 1, answer)
         return answer
-    
+
     def traverse(self, node, level, answer):
         if not node:
-            return 
-        
+            return
+
         if level > len(answer):
-            # we are at a new level
             answer.append([node.val])
         else:
-            answer[level-1].extend([node.val])
-        
+            answer[level - 1].extend([node.val])
+
+
         self.traverse(node.left, level + 1, answer)
-        self.traverse(node.right, level + 1, answer)    
-"""
+        self.traverse(node.right, level + 1, answer)
+
 
 
 
@@ -78,4 +102,4 @@ if __name__ == '__main__':
     N2.right = N5
 
     S = Solution()
-    print(S.levelOrder(N1))
+    print(S.levelOrder2(N1))
