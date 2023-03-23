@@ -65,7 +65,7 @@ class Solution:
 
     # Attempting to re-write both from memory
 
-    def levelOrder2(self, root: TreeNode) -> List[List[int]]:
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:
         if not root:
             return []
 
