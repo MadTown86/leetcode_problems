@@ -2,17 +2,20 @@
 
 def cacheit(func):
     counter = 0
-    def outter(func):
-        def inner(node, targetSum, valcarry=0):
-            nonlocal counter
-            counter += 1
-            print(f'VALCARRY: {valcarry}')
-            print(f'RECURSIVE LEVEL: {counter}')
-            print(f'NODE NAME: {node.name}')
-            print(f'NODE VALUE: {node.val}')
-            print(f'targetSum: {targetSum}')
-            return func(node, targetSum)
-        return outter
+    sum_nodes = 0
+    def inner(self, node, targetSum):
+        nonlocal counter
+        nonlocal sum_nodes
+        sum_nodes += node.val
+        counter += 1
+        print(type(node))
+        print(type(targetSum))
+        print(f'ACCUMULATED SUM: {sum_nodes}')
+        print(f'RECURSIVE LEVEL: {counter}')
+        print(f'NODE NAME: {node.name}')
+        print(f'NODE VALUE: {node.val}')
+        print(f'targetSum: {targetSum}')
+        return func(self, node, targetSum)
     return inner
 class TreeNode:
     def __init__(self, name: str = None, val=0, left=None, right=None):
@@ -76,4 +79,4 @@ if __name__ == '__main__':
     L6.right = L9
 
     S = Solution()
-    print(S.hasPathSum(N1, 18))
+    S.hasPathSum(N1, 18)
