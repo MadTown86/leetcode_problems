@@ -6,13 +6,18 @@ class TreeNode:
         self.right = right
 class Solution:
     def hasPathSum(self, root: TreeNode, targetSum: int) -> bool:
-        if not root: #A
-            return targetSum == 0
-        if root.left and root.right:
-            self.hasPathSum(root.left, targetSum - root.val)
-            self.hasPathSum(root.right, targetSum - root.val)
-        elif root.left
-        return self.hasPathSum(root.left, targetSum-root.val) or self.hasPathSum(root.right, targetSum-root.val) #C1, C2
+
+        if not root:
+            return False
+        print(f'ROOT VAL OF CURRENT NODE: {root.val}')
+        print(f'CURRENT TARGET SUM {targetSum}')
+        if not root.left and not root.right:
+            print(f'LEAF AT {root.val}')
+            return print(f'This is the return call: {targetSum - root.val == 0}')
+        return self.hasPathSum(root.left, targetSum - root.val)
+        print(f'ROOT VAL AFTER RETURN FROM LEFT RECURSION: {root.val}')
+        self.hasPathSum(root.right, targetSum - root.val)
+        print(f'ROOT VAL AFTER RETURN FROM RIGHT RECURSION: {root.val}')
 
 
 if __name__ == '__main__':
@@ -53,4 +58,4 @@ if __name__ == '__main__':
     L6.right = L9
 
     S = Solution()
-    print(S.hasPathSum(N1, 18))
+    print(S.hasPathSum(N1, 10))
