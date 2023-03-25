@@ -2,20 +2,20 @@
 
 def cacheit(func):
     counter = 0
-    sum_nodes = 0
-    def inner(self, node, targetSum):
+    bins = []
+    def inner(self, node, targetSum, acc_sum):
         nonlocal counter
-        nonlocal sum_nodes
-        sum_nodes += node.val
+        nonlocal bins
+        if node:
+            bins.append(node.name)
+            print(f'ACCUMULATED SUM: {acc_sum}')
+            print(f'RECURSIVE LEVEL: {counter}')
+            print(f'NODE NAME: {node.name}')
+            print(f'NODE VALUE: {node.val}')
+            print(f'targetSum: {targetSum}')
+            print(f"NODE'S VISITED: {bins}")
         counter += 1
-        print(type(node))
-        print(type(targetSum))
-        print(f'ACCUMULATED SUM: {sum_nodes}')
-        print(f'RECURSIVE LEVEL: {counter}')
-        print(f'NODE NAME: {node.name}')
-        print(f'NODE VALUE: {node.val}')
-        print(f'targetSum: {targetSum}')
-        return func(self, node, targetSum)
+        return func(self, node, targetSum, acc_sum)
     return inner
 class TreeNode:
     def __init__(self, name: str = None, val=0, left=None, right=None):
@@ -24,22 +24,35 @@ class TreeNode:
         self.left = left
         self.right = right
 class Solution:
-
+    run_count = 0
     @cacheit
-    def hasPathSum(self, root: TreeNode, targetSum: int) -> bool:
-        if root.val:
-            print(root.val)
-        if not root:
-            return 0
-        if root.left and root.right:
-            return self.hasPathSum(root.left, targetSum) + self.hasPathSum(root.right, targetSum) + root.val
-        elif root.left and not root.right:
-            return self.hasPathSum(root.left, targetSum) + root.val
-        elif root.right and not root.left:
-            return self.hasPathSum(root.right, targetSum) + root.val
-        else:
-            return root.val
+    def hasPathSum(self, root: TreeNode, targetSum: int, acc_sum=0) -> bool:
+        if self.run_count == 0 and not root:
+            return False
+        self.run_count += 1
+        return targetSum == acc_sum if not root else any((self.hasPathSum(root.left, targetSum, acc_sum + root.val),
+                    self.hasPathSum(root.right, targetSum, acc_sum + root.val)))
 
+# Finally had to give up,
+
+
+"""
+class Solution:
+    # @param root, a tree node
+    # @param sum, an integer
+    # @return a boolean
+    # 1:27
+    def hasPathSum(self, root, sum):
+        if not root:
+            return False
+
+        if not root.left and not root.right and root.val == sum:
+            return True
+        
+        sum -= root.val
+
+        return self.hasPathSum(root.left, sum) or self.hasPathSum(root.right, sum)
+        """
 
 if __name__ == '__main__':
     N1 = TreeNode(name="Node 1", val=1)
@@ -79,4 +92,4 @@ if __name__ == '__main__':
     L6.right = L9
 
     S = Solution()
-    S.hasPathSum(N1, 18)
+    print(S.hasPathSum(node=N1, targetSum=7, acc_sum=0))
