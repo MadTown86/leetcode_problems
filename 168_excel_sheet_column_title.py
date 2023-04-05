@@ -1,9 +1,9 @@
-# https://leetcode.com/problems/excel-sheet-column-title/
-
 import string
 
 caps = string.ascii_uppercase
-
-
 class Solution:
-    def convertToTitle(self, columnNumber: int) -> str:
+    def convertToTitle(self, num: int) -> str:
+        if not num:
+            return ''
+        q, r = divmod(num - 1, 26)
+        return self.convertToTitle(q) + caps[r]
