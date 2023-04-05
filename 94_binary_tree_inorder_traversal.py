@@ -18,6 +18,22 @@ class Solution:
         if root.right != None:
             self._subtree(root.right)
 
+
+if __name__ == '__main__':
+    N1 = TreeNode(1)
+    N2 = TreeNode(2)
+    N3 = TreeNode(3)
+    N4 = TreeNode(4)
+    N5 = TreeNode(5)
+
+    N1.left = N2
+    N1.right = N3
+    N2.left = N4
+    N4.left = N5
+
+    S = Solution()
+    S.inorderTraversal(N1)
+
 """
 Other peoples brilliant answers:
 """
@@ -36,6 +52,7 @@ Other peoples brilliant answers:
 # 144. Binary Tree Preorder Traversal: https://leetcode.com/problems/binary-tree-preorder-traversal/
 # 145. Binary Tree Postorder Traversal: https://leetcode.com/problems/binary-tree-postorder-traversal/
 
+"""
 class Solution:
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
 		# left -> root -> right
@@ -62,3 +79,4 @@ class Solution:
         return res
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         return self.inorder(root)
+"""
