@@ -7,18 +7,31 @@ Given an integer array nums and an integer k, return true if there are two disti
 indices i and j in the array such that nums[i] == nums[j] and abs(i - j) <= k.
 """
 
+from collections import defaultdict
+
 class Solution:
-    def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
-        # Dammit Muumi, why are you so smart.
-        print(f'NUMS: {nums}')
-        for x in range(len(nums) - k if k < len(nums) else len(nums)):
-            print(f'X: {x}')
-            y = x + 1
-            while y <= x+k and y <= len(nums)-1:
-                print(f'Y: {y}')
-                if nums[x] == nums[y]:
+
+    # Time complexity issue
+    def containsNearbyDuplicate2(self, nums: List[int], k: int) -> bool:
+        i = 0
+        while i < len(nums)-1:
+            for j in range(i+1, len(nums) if (i+k) > len(nums)-1 else i+k+1):
+                if nums[i] == nums[j] and abs(i-j) <= k:
                     return True
-                y += 1
+            i += 1
+        return False
+
+    def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
+        C = defaultdict(list)
+        for index, number in enumerate(nums):
+            C[number] += [index]
+        for l in C.values():
+            if len(l) > 1:
+                while l:
+                    first = l.pop(0)
+                    next = l[0] if l else 0
+                    if abs(first-next) <= k:
+                        return True
         return False
 
 
@@ -40,4 +53,6 @@ if __name__ == "__main__":
     assert S.containsNearbyDuplicate(c, 2) is False
     assert S.containsNearbyDuplicate(d, 2) is True
     assert S.containsNearbyDuplicate(e, 3) is True
+
+    # S.contains2(e)
 
