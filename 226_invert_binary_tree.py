@@ -6,17 +6,11 @@ class TreeNode:
 class Solution:
     def invertTree(self, root: TreeNode) -> TreeNode:
         newTree = TreeNode(val=root.val)
-        from_stack = [(root.left, root.right)]
-        to_stack = [(newTree.left, newTree.right)]
-        while from_stack:
-            l, r = from_stack.pop()
-            ntl, ntr = to_stack.pop()
-            ntl = TreeNode(r.val)
-            ntr = TreeNode(l.val)
-            to_stack.append((ntl.left, ntl.right))
-            to_stack.append((ntr.left, ntr.right))
-            from_stack.append((l.left, l.right))
-            from_stack.append((r.left, r.right))
+        head_newTree = newTree
+        cursor = root
+        left_stack = [root.left]
+        right_stack = [root.right]
+
 
 
 
