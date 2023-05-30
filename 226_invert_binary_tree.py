@@ -27,34 +27,46 @@ class Solution:
                     print_stack.append(r_inp)
                     loop_stack.append((r.left, r.right))
 
+        print(print_stack)
+
     def invertTree2(self, root: TreeNode) -> TreeNode:
         if not root:
             return root
-        new_Tree = root
-        n_T = new_Tree
-        traversed = []
-        stack = [root.left, root.right]
+        # Create new tree
+        nT = TreeNode(root.val) # For traversal - necessary?
+        nT_pointer = nT # For pointer to new head
 
-        while stack:
-            r, l = stack.pop()
-            new_node = TreeNode(val=r.val, left=r.right, right=r.left)
-            n_T.right = new_node
+        # Establish reference to existing nodes
+        nT.left = root.right
+        nT.right = root.left
+
+        # Array of already traversed nodes and to be traversed nodes
+        t = [root] # Traversed
+        s = [(root.left, root.right)] # Node Stack
+
+        # Alter references
+        while s:
+            r, l = s.pop()
+            if r and r.left and r.right:
+                s.append((r.left, r.right))
+                if r not in t:
+                    rl_copy, rr_copy = r.left, r.right
+                    r.left = rr_copy
+                    r.right = rl_copy
+                    t.append(r)
+            if l and l.left and l.right:
+                s.append((l.left, l.right))
+                if l not in t:
+                    ll_copy, lr_copy = l.left, l.right
+                    l.left = lr_copy
+                    l.right = ll_copy
+                    t.append(l)
+
+        return nT
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-        print(print_stack)
 
 if __name__ == "__main__":
     N15 = TreeNode(15)
@@ -74,5 +86,6 @@ if __name__ == "__main__":
     NRoot = TreeNode(1, N2, N3)
 
     S = Solution()
-    S.invertTree(NRoot)
+    altered_T = S.invertTree2(NRoot)
+    S.invertTree(altered_T)
 
