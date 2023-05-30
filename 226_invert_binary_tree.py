@@ -47,14 +47,14 @@ class Solution:
         # Alter references
         while s:
             r, l = s.pop()
-            if r and r.left and r.right:
+            if r:
                 s.append((r.left, r.right))
                 if r not in t:
                     rl_copy, rr_copy = r.left, r.right
                     r.left = rr_copy
                     r.right = rl_copy
                     t.append(r)
-            if l and l.left and l.right:
+            if l:
                 s.append((l.left, l.right))
                 if l not in t:
                     ll_copy, lr_copy = l.left, l.right
