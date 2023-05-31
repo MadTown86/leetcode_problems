@@ -7,9 +7,6 @@ class TreeNode:
         self.right = right
 class Solution:
     def invertTree(self, root: TreeNode) -> TreeNode:
-        new_Tree = TreeNode(val=root.val)
-        left_Tree = None
-        right_Tree = None
         print_stack = []
         l, r = root.left, root.right
         print_stack.append(((root.val, (l.val, r.val))))
@@ -33,16 +30,16 @@ class Solution:
         if not root:
             return root
         # Create new tree
-        nT = TreeNode(root.val) # For traversal - necessary?
-        nT_pointer = nT # For pointer to new head
+        nT = TreeNode(root.val)  # For traversal - necessary?
+
 
         # Establish reference to existing nodes
         nT.left = root.right
         nT.right = root.left
 
         # Array of already traversed nodes and to be traversed nodes
-        t = [root] # Traversed
-        s = [(root.left, root.right)] # Node Stack
+        t = [root]  # Traversed
+        s = [(root.left, root.right)]  # Node Stack
 
         # Alter references
         while s:
