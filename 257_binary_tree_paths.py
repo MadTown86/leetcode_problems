@@ -1,3 +1,5 @@
+from typing import List
+
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -6,7 +8,7 @@ class TreeNode:
 
 class Solution:
     res_list = set()
-    def binaryTreePaths(self, root: TreeNode, outstr) -> str:
+    def binaryTreePaths(self, root: TreeNode) -> List[str]:
         pnter = '->'
         """
         Recursion: 
@@ -15,17 +17,21 @@ class Solution:
         if not, then first left - continue the recursion loop
         else right - continue the recursion loop
         """
+        def traverse(root: TreeNode, outstr) -> List[str]:
+            if not root:
+                res = ''
+                for x in range(len(outstr)):
+                    if x < len(outstr)-1:
+                        res += outstr[x] + pnter
+                    else:
+                        res += outstr[x]
+                self.res_list.add(res)
+                return res
+            return traverse(root.left, outstr + str(root.val)) + traverse(root.right, outstr + str(root.val))
 
-        if not root:
-            res = ''
-            for x in range(len(outstr)):
-                if x < len(outstr)-1:
-                    res += outstr[x] + pnter
-                else:
-                    res += outstr[x]
-            self.res_list.add(res)
-            return ''
-        return self.binaryTreePaths(root.left, outstr + str(root.val)) + self.binaryTreePaths(root.right, outstr + str(root.val))
+        traverse(root, '')
+        l = [x for x in self.res_list]
+        return l
 
 
 
@@ -39,6 +45,7 @@ if __name__ == "__main__":
     N1 = TreeNode(val=1, left=N2, right=N3)
 
     S = Solution()
-    print(S.binaryTreePaths(N1, ''))
-    print(S.res_list)
+    doeswegotit = S.binaryTreePaths(N1)
+    print(doeswegotit)
+
 
