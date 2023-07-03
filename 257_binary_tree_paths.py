@@ -7,8 +7,8 @@ class TreeNode:
         self.right = right
 
 class Solution:
-    res_list = set()
     def binaryTreePaths(self, root: TreeNode) -> List[str]:
+        res_list = set()
         pnter = '->'
         """
         Recursion: 
@@ -18,31 +18,39 @@ class Solution:
         else right - continue the recursion loop
         """
         def traverse(root: TreeNode, outstr) -> List[str]:
-            if not root:
+            print(outstr)
+            if not root.left and not root.right:
                 res = ''
-                for x in range(len(outstr)):
+                outstr += [str(root.val)]
+                for x in range(1, len(outstr)):
                     if x < len(outstr)-1:
                         res += outstr[x] + pnter
                     else:
                         res += outstr[x]
-                self.res_list.add(res)
+                res_list.add(res)
                 return res
-            return traverse(root.left, outstr + str(root.val)) + traverse(root.right, outstr + str(root.val))
+            if root.left:
+                traverse(root.left, outstr + [str(root.val)])
+            if root.right:
+                traverse(root.right, outstr + [str(root.val)])
+            return ['']
 
-        traverse(root, '')
-        l = [x for x in self.res_list]
+        traverse(root, [''])
+        l = [x for x in res_list]
         return l
 
 
 
 if __name__ == "__main__":
-    N7 = TreeNode(val=7)
-    N6 = TreeNode(val=6)
-    N5 = TreeNode(val=5)
-    N4 = TreeNode(val=4)
-    N3 = TreeNode(val=3, left=N6, right=N7)
-    N2 = TreeNode(val=2, left=N4, right=N5)
-    N1 = TreeNode(val=1, left=N2, right=N3)
+    N7 = TreeNode(val=70)
+    N6 = TreeNode(val=60)
+    N5 = TreeNode(val=50)
+    # N4 = TreeNode(val=4)
+    N3 = TreeNode(val=30, left=N6, right=N7)
+    N2 = TreeNode(val=20, right=N5)
+    N1 = TreeNode(val=10, left=N2, right=N3)
+
+    # Test Input [37,-34,-48,null,-100,-100,48,null,null,null,null,-54,null,-71,-22,null,null,null,8]
 
     S = Solution()
     doeswegotit = S.binaryTreePaths(N1)
