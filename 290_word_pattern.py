@@ -3,4 +3,5 @@
 class Solution:
     def wordPattern(self, pattern: str, s: str) -> bool:
         for x, y in zip(pattern, s):
+            return False
 
