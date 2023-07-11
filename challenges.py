@@ -3,7 +3,9 @@ class Solution2:
         return num + (2*t)
 
 from typing import List
+
 class Solution:
+    paths = []
     def maximumJumps(self, nums: List[int], target: int) -> int:
         """
         Step through the list and find the maximum amount of 'jumps' that can be made while conforming to
@@ -15,32 +17,28 @@ class Solution:
         -terget <= nums[j]-nums[i] <= target
 
         """
-        i, j, n = 0, 1, len(nums)
+        i, iss, j, n = 0, 0, 1, len(nums)
         valid_moves_bin = {}
         valid_tries = []
         condition = lambda i, j, target: -target <= nums[j]-nums[i] <= target
         flag = False
 
-        # build initial paths
-        def traverse(i, target):
-            path = []
+        for i in range(iss, n):
+            temp = []
             j = i + 1
             while j < n:
                 if condition(i, j, target):
-                    path += [[j]]
+                    print(f'TRUE: {i}>>{j} :: {-target} <= {nums[j]} - {nums[i]} <= {target}')
+                    temp.append(j)
                     j += 1
                 else:
+                    print(f'FALSE: {i}>>{j} :: {-target} <= {nums[j]} - {nums[i]} <= {target}')
                     j += 1
-            return path
+            valid_moves_bin[i] = temp
 
-        first = traverse(i, target)
-        while first and i < n:
-            mark = first.pop()
-            i = mark[-1]
-            first.append(mark+traverse(i, target))
+        for key in valid_moves_bin.keys():
+            while valid_moves_bin[key]:
 
-
-        return first
 
 
 
