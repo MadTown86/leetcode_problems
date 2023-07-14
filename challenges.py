@@ -6,7 +6,9 @@ from typing import List
 
 class Solution:
     paths = []
+    counter = 0
     def maximumJumps(self, nums: List[int], target: int) -> int:
+        S.paths = []
         """
         Step through the list and find the maximum amount of 'jumps' that can be made while conforming to
         certain conditions.
@@ -19,25 +21,43 @@ class Solution:
         """
         i, iss, j, n = 0, 0, 1, len(nums)
         valid_moves_bin = {}
-        valid_tries = []
+        true_cond = lambda: print(f'TRUE: {i}>>{j} :: {-target} <= {nums[j]} - {nums[i]} <= {target}')
+        false_cond = lambda: print(f'FALSE: {i}>>{j} :: {-target} <= {nums[j]} - {nums[i]} <= {target}')
         condition = lambda i, j, target: -target <= nums[j]-nums[i] <= target
         flag = False
 
-        for i in range(iss, n):
-            temp = []
-            j = i + 1
-            while j < n:
-                if condition(i, j, target):
-                    print(f'TRUE: {i}>>{j} :: {-target} <= {nums[j]} - {nums[i]} <= {target}')
-                    temp.append(j)
+        def optional_paths(i_pos: int, nums: List[int], target: int) -> List[int]:
+            self.counter += 1
+            res = []
+            j = i_pos + 1
+            while j < len(nums):
+                if condition(i_pos, j, target):
+                    true_cond()
+                    res.append(j)
                     j += 1
                 else:
-                    print(f'FALSE: {i}>>{j} :: {-target} <= {nums[j]} - {nums[i]} <= {target}')
+                    false_cond()
                     j += 1
-            valid_moves_bin[i] = temp
+            return res
+        path_list = optional_paths(i, nums, target)
 
-        for key in valid_moves_bin.keys():
-            while valid_moves_bin[key]:
+        print(f'path_list: {path_list}')
+
+        def traverse(single_path) -> int:
+            for x in optional_paths(single_path, nums, target):
+                traverse(x)
+
+        while path_list:
+            self.counter = 0
+            single_path = path_list.pop()
+            traverse(single_path)
+            self.paths.append(self.counter)
+
+        return max(self.paths)
+
+
+
+
 
 
 
@@ -54,8 +74,8 @@ if __name__ == "__main__":
 
     S = Solution()
     print(S.maximumJumps(*input))
-    # print(S.maximumJumps(*inp2))
-    # print(S.maximumJumps(*inp3))
-    # print(S.maximumJumps(*inp4))
+    print(S.maximumJumps(*inp2))
+    print(S.maximumJumps(*inp3))
+    print(S.maximumJumps(*inp4))
 
 
