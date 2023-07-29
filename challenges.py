@@ -56,16 +56,6 @@ class Solution:
         return max(self.paths)
 
 
-
-
-
-
-
-
-
-
-
-
 if __name__ == "__main__":
     input = ([1, 3, 6, 4, 1, 2], 2)
     inp2 = ([1, 3, 1, 4, 1, 6, 1, 7, 8], 2)
@@ -74,8 +64,8 @@ if __name__ == "__main__":
 
     S = Solution()
     print(S.maximumJumps(*input))
-    print(S.maximumJumps(*inp2))
-    print(S.maximumJumps(*inp3))
-    print(S.maximumJumps(*inp4))
+    # print(S.maximumJumps(*inp2))
+    # print(S.maximumJumps(*inp3))
+    # print(S.maximumJumps(*inp4))
 
 
