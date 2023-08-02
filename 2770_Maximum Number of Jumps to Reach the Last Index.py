@@ -22,21 +22,20 @@ class Solution:
         return count_max if count_max > 0 else -1
 
     def maximumJumps2(self, nums: List[int], target: int):
-        count = 0
-        def traverse(nums: List[int], target: int) -> List[int]:
-            i, j, stack, n = 0, 1, [], len(nums)
-            cond = lambda i, j: -target <= nums[j] - nums[i] <= target
-            while j < n-1:
-                if cond(i, j):
-                    stack.append(j)
-                    j += 1
+        i, j, stack, n = 0, 1, [], len(nums)
+        while j < n-1:
+            if -target <= nums[j] - nums[i] <= target:
+                stack.append(j)
                 j += 1
-            return stack
+            j += 1
 
-        outer_stack = traverse(nums, target)
-        while outer_stack:
-            count += 1
-            self.maximumJumps2(nums[outer_stack.pop():])
+        if n-1 not in stack:
+            return -1
+
+
+
+
+
 
 
 
