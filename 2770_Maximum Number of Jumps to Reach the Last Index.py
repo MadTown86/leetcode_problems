@@ -28,24 +28,25 @@ class Solution:
         pos_one_moves = []
         count = 0
 
-        while b < n-1:
+        while b <= n-1:
             if -target <= nums[b] - nums[a] <= target:
                 pos_one_moves.append(b)
                 b += 1
-            b += 1
+            else:
+                b += 1
 
         a, b = 0, 1
+        print(f'{pos_one_moves=}')
+        for x in pos_one_moves:
+            if n - x < count:
+                continue
+            else:
+                a = x
+                while a <= n-2:
+                    b = a + 1
+                    while b <= n-1:
+                        if -target <= nums[b] - nums[a]
 
-        while a <= len(pos_one_moves)-1:
-            interim_count = 0 + a
-            while b <= n-1:
-                if -target <= nums[b] - nums[pos_one_moves[a]] <= target:
-                    interim_count += 1
-                    b += 1
-                b += 1
-            if count < interim_count:
-                count = interim_count
-            a += 1
 
         return count if count > 0 else -1
 
