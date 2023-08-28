@@ -1,61 +1,49 @@
+# https://leetcode.com/contest/weekly-contest-360/problems/minimum-operations-to-form-subsequence-with-target-sum/
+
 from typing import List
 
 
 class Solution:
     def minOperations(self, nums: List[int], target: int) -> int:
         # Outer Layer - Search for potential sublists that needs to run after each operational push
-        a, b = 0, 1
-        while True:
-            potential_sublists = []
-            while b < len(nums):
-                if b == len(nums) - 1:
-                    summed = sum(nums[a:])
-                    splice = nums[a:]
-                else:
-                    summed = sum(nums[a : b + 1])
-                    splice = nums[a : b + 1]
-                if summed > target:
-                    divisible_list = []
-                    for index in range(a, b + 1):
-                        if nums[index] % 2 == 0:
-                            divisible_list.append((index, nums[index]))
-                    if not divisible_list:
-                        a += 1
+        back_mark = len(nums) - 1
+        cursor = 0
+        trans_a = 0
+        trans_b = 0
+        while cursor < back_mark:
+            if nums[cursor] % 2 == 0:
+                trans_val = nums.pop(cursor)
+                nums.append(trans_val)
+                trans_a = len(nums) - 1
+                trans_b = trans_a - 1
+                back_mark -= 1
+                while trans_b != cursor:
+                    if nums[trans_b] > nums[trans_a] and nums[trans_b] % 2 == 0:
+                        transfer = nums[trans_b]
+                        nums[trans_b] = nums[trans_a]
+                        nums[trans_a] = transfer
+                        trans_a -= 1
+                        trans_b -= 1
                     else:
-                        for ind, value in divisible_list:
-                            if summed - value < target:
-                                potential_sublists.append(splice)
-
-        operation_count = 0
-        i, j = 0, 1
-        while j < len(nums):
-            if j == len(nums) - 1:
-                summed = sum(nums[i:])
-                splice = nums[i:]
+                        break
             else:
-                summed = sum(nums[i : j + 1])
-                splice = nums[i : j + 1]
-            if summed > target:
-                divisible_list = []
-                for index in range(i, j + 1):
-                    if nums[index] % 2 == 0:
-                        divisible_list.append((index, nums[index]))
-                if not divisible_list:
-                    i += 1
-                else:
-                    for ind, value in divisible_list:
-                        if summed - value < target:
-                            halved = value // 2
-                            nums[ind] = halved
-                            nums.insert(ind, halved)
-                            operation_count += 1
-                            break
-            if summed == target:
-                return operation_count
-            if summed < target:
-                j += 1
+                cursor += 1
 
-        return -1
+        summed = 0
+        operations_count = 0
+        a, b = 0, 1
+        c, d = back_mark, back_mark + 1
+        while a < len(nums):
+            if summed + nums[a] < target:
+                summed += nums[a]
+                a += 1
+            if summed + nums[a] > target:
+
+                b = a - 1
+                while b >= 0:
+
+
+
 
 
 """
@@ -77,9 +65,12 @@ If impossible return -1
 if __name__ == "__main__":
     inputs = [([1, 2, 8], 7), ([1, 32, 1, 2], 12), ([1, 32, 1], 35), ([1, 1, 8, 1], 5)]
 
+    arrange = ([1, 32, 3, 16, 36, 4, 5, 64], 10)
+
     S = Solution()
+    S.minOperations(*arrange)
     # S.minOperations(*inputs[0])
-    S.minOperations(*inputs[1])
+    # S.minOperations(*inputs[1])
     # assert S.minOperations(*inputs[0]) == 1
     # assert S.minOperations(*inputs[1]) == 2
     # assert S.minOperations(*inputs[2]) == -1
