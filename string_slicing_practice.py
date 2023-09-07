@@ -1,17 +1,18 @@
 class Solution:
     def slice_show(self, inp: str) -> None:
         for x in range(len(inp)):
-            print(f"{inp[x:]=} ::: {inp[:x]=} ::: {inp[-x:]=} ::: {inp[:-x]=}")
+            print(f"{x=} ::: {inp[x:]=} ::: {inp[:x]=} ::: {inp[-x:]=} ::: {inp[:-x]=}")
 
     def slice_replace(self, inp: str, i: int, j=int) -> str:
         res = ""
+        print(f"{inp[j]=} ::: {inp[i:j]=} ::: {inp[i]=} ::: {inp[j:]=}")
         res = inp[j] + inp[i:j] + inp[i] + inp[j:]
         return res
 
 
 if __name__ == "__main__":
     S = Solution()
-    input = ["12345", "22048", "12783333"]
+    input = ["12345", "22048", "123456789"]
     for x in input:
         print(S.slice_show(x))
         for i in range(len(x)):
