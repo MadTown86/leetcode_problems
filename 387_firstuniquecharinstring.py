@@ -1,5 +1,4 @@
 # https://leetcode.com/problems/first-unique-character-in-a-string/
-from collections import defaultdict
 class Solution:
     def firstUniqChar(self, s: str) -> int:
         min_pos = len(s)
