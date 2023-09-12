@@ -23,13 +23,12 @@ class Solution:
         return res
 
     def readBinaryWatch(self, turnedOn: int) -> List[str]:
-        hour = "0000"
-        hours = []
-        for x in range(len(hour)):
-            hour = "1" + hour[x + 1 :]
-            hours.append(hour)
-
-        print(hours)
+        output = []
+        for h in range(12):
+            for m in range(60):
+                if bin(h).count("1") + bin(m).count("1") == turnedOn:
+                    output.append(f"{h}:{m:02}")
+        return output
 
 
 if __name__ == "__main__":
