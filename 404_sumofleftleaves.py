@@ -8,13 +8,13 @@ class TreeNode:
         self.right = right
 class Solution:
     def sumOfLeftLeaves(self, root: TreeNode) -> int:
+        """
+        Decent answer
+        """
         if not root:
             return 0
         if root.left and not root.left.left and not root.left.right:
-            print(root.left.val)
-            if root.right:
-                return root.val + self.sumOfLeftLeaves(root.right) + self.sumOfLeftLeaves(root.left)
-            return self.sumOfLeftLeaves(root.left) + self.sumOfLeftLeaves(root.right) + root.val
+            return root.left.val + self.sumOfLeftLeaves(root.left) + self.sumOfLeftLeaves(root.right)
         return self.sumOfLeftLeaves(root.left) + self.sumOfLeftLeaves(root.right)
 
 
