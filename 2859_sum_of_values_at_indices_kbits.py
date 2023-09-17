@@ -7,6 +7,7 @@ class Solution:
     """
     Should have just stayed up for the weekly test.  At least would have gotten one answer.
     """
+
     def sumIndicesWithKSetBits(self, nums: List[int], k: int) -> int:
         s = 0
         for x in range(len(nums)):
