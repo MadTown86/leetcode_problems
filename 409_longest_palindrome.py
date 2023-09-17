@@ -1,40 +1,94 @@
 # https://leetcode.com/problems/longest-palindrome/
 from collections import defaultdict
+
+
 class Solution:
+    def longestPalindrome2(self, s: str) -> int:
+        """
+        Good Answer but don't need to actually build the palindrome.  So going to refactor
+        """
+        d = defaultdict(int)
+        for x in s:
+            d[x] += 1
+        f, m, b = "", "", ""
+        d_copy = d.copy()
+        odd = {}
+        for x, y in d.items():
+            if y % 2 == 0:
+                f = (x * (y // 2)) + f
+                b += x * (y // 2)
+            else:
+                odd[x] = y
+                d_copy.pop(x)
+
+        if len(odd.keys()) <= 1:
+            for x, y in odd.items():
+                m += x * y
+
+        elif odd:
+            first = [x for x in odd.keys()][0]
+            for x, y in odd.items():
+                if odd[first] < y:
+                    first = x
+            m += first * odd[first]
+            odd.pop(first)
+
+            for x, y in odd.items():
+                if y > 2:
+                    odd_toeven = y - 1
+                    count = odd_toeven // 2
+                    f = count * x + f
+                    b += count * x
+
+        return len(f + m + b)
+
     def longestPalindrome(self, s: str) -> int:
-        c = defaultdict(int)
-        for char in sorted(s, key=lambda char: s.count(char)):
-            c[char] += 1
-        res = ''
         count = 0
-        if len(c.keys()) == 1:
-            return len(s)
-        if len(c.keys()) == 2:
-            for a in c.keys():
-                if c[a] % 2 == 0:
-                    return len(s)
-        for char, cc in c.items():
-            if count == 0 and cc == 1:
-                res += char
-                count += 1
-                continue
-            while cc >= 2:
-                res =char + res + char
-                cc -= 2
-                count += 2
-        return len(res)
+        d = defaultdict(int)
+        for x in s:
+            d[x] += 1
+
+        odd = {}
+        for x, y in d.items():
+            if y % 2 == 0:
+                count += y
+            else:
+                odd[x] = y
+
+        if len(odd.keys()) <= 1:
+            for x, y in odd.items():
+                count += y
+
+        elif odd:
+            first = [x for x in odd.keys()][0]
+            for x, y in odd.items():
+                if odd[first] < y:
+                    first = x
+            count += odd[first]
+            odd.pop(first)
+
+            for x, y in odd.items():
+                if y > 2:
+                    count += y - 1
+
+        return count
+
 
 if __name__ == "__main__":
     S = Solution()
-    inp = ["abccccdd", 'a', 'abbacddeeef', 'ccc', 'ababababa', "zeusnilemacaronimaisanitratetartinasiaminoracamelinsuez"]
-    # assert S.longestPalindrome(inp[0]) == 7
-    # assert S.longestPalindrome(inp[1]) == 1
-    # assert S.longestPalindrome(inp[2]) == 9
-    # assert S.longestPalindrome(inp[3]) == 3
-    # assert S.longestPalindrome(inp[4]) == 9
+    inp = [
+        "abccccdd",
+        "a",
+        "abbacddeeef",
+        "ccc",
+        "ababababa",
+        "zeusnilemacaronimaisanitratetartinasiaminoracamelinsuez",
+    ]
+    assert S.longestPalindrome(inp[0]) == 7
+    assert S.longestPalindrome(inp[1]) == 1
+    assert S.longestPalindrome(inp[2]) == 9
+    assert S.longestPalindrome(inp[3]) == 3
+    assert S.longestPalindrome(inp[4]) == 9
     assert S.longestPalindrome(inp[5]) == 55
 
-    print()
-
-
-
+    # print(S.longestPalindrome(inp[5]))
