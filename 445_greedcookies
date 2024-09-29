@@ -1,0 +1,20 @@
+
+def main(g: list, s: list)-> int:
+    """
+    input: two list arrays
+    output: integer
+    time complexity: linear
+    """
+    res = 0
+    for x, y in zip(g, s):
+        if y >= x:
+            res += 1
+        else:
+            continue
+    return res
+    
+
+if __name__ == "__main__":
+    inputs = [([1, 2, 3], [1, 1]), ([1, 2], [1, 2, 3])]
+    for i in inputs:
+        print(main(i[0], i[1]))
